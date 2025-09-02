@@ -1,0 +1,19 @@
+Metadata-Version: 2.4
+Name: ft_package
+Version: 0.0.1
+Summary: A sample test package
+Author: Eagle
+Author-email: eagle@42.fr
+License: MIT
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Dynamic: license-file
+
+# `ft_package.count_in_list`
+
+**Function**: Count occurrences of an item in a list.
+
+**Signature**:
+```python
+def count_in_list(lst: list, item: any) -> int
+
