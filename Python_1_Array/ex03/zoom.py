@@ -1,0 +1,27 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from load_image import ft_load
+
+
+def main() -> None:
+    """
+        Loads an image, crops a region,
+        converts it to grayscale and displays it.
+    """
+    image = ft_load("animal.jpeg")
+    print(image)
+    image = image[100:500, 450:850]
+    assert image.shape[0] and image.shape[1], "Zoom not possible"
+    image = np.mean(image, axis=2).astype(np.uint8)
+    image = np.expand_dims(image, axis=-1)
+    print(f"New shape after slicing: {image.shape} or {image.shape[:2]}")
+    print(image)
+    plt.imshow(image, cmap="gray")
+    plt.show()
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as e:
+        print(f"{type(e).__name__}: {e}")
