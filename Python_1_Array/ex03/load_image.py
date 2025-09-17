@@ -2,10 +2,8 @@ from PIL import Image, UnidentifiedImageError
 import numpy as np
 
 
-def ft_load(path: str) -> np.array:
-    """
-        Loads an image and returns its RGB data.
-    """
+def ft_load(path: str) -> np.ndarray:
+    """Loads an image and returns its RGB data."""
 
     data = []
     try:
