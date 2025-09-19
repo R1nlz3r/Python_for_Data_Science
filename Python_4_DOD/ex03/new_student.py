@@ -1,0 +1,24 @@
+import random
+import string
+from dataclasses import dataclass, field
+
+
+def generate_id() -> str:
+    return "".join(random.choices(string.ascii_lowercase, k=15))
+
+
+@dataclass
+class Student:
+    name: str
+    surname: str
+    active: bool = True
+    login: str = field(init=False, default="")
+    id: str = field(default_factory=generate_id, init=False)
+
+    def __post_init__(self):
+        assert isinstance(self.name, str), "Student name is not a string"
+        assert isinstance(self.surname, str), "Student surname is not a string"
+        assert isinstance(self.active, bool), "Student active is not a boolean"
+        assert len(self.name), "Student name is empty"
+        assert len(self.surname), "Student surname is empty"
+        self.login = self.name[0] + self.surname
