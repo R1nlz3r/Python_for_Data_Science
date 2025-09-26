@@ -1,44 +1,46 @@
 def give_bmi(height: list[int | float],
              weight: list[int | float]) -> list[int | float]:
-    """
-        Compute BMI (kg/m²) for each height-weight pair
-    """
+    """Compute BMI (kg/m²) for each height-weight pair"""
 
     results = []
 
     try:
-        assert type(height) is list and type(
-            weight) is list, "Parameters must be lists"
-        assert len(height) == len(weight), "lists are not of the same size"
+        if not isinstance(height, list) or not isinstance(weight, list):
+            raise TypeError("Parameters must be lists")
+        if len(height) != len(weight):
+            raise ValueError("Lists must be of the same size")
         for h, w in zip(height, weight):
-            assert type(h) is int or type(
-                h) is float, "Heights must be numeric"
-            assert type(w) is int or type(
-                w) is float, "Weights must be numeric"
+            if not isinstance(h, (int, float)):
+                raise TypeError("Heights must be numeric")
+            if not isinstance(w, (int, float)):
+                raise TypeError("Weights must be numeric")
             h = h ** 2
-            assert h > 0 and w >= 0 and h != w, "Invalid height/weight values"
+            if h <= 0 or w < 0:
+                raise ValueError("Invalid height/weight values")
             results.append(w / h)
-    except AssertionError as e:
-        print(f"AssertionError: {e}")
+    except (TypeError, ValueError) as e:
+        print(f"{type(e).__name__}: {e}")
+        return []
 
     return results
 
 
 def apply_limit(bmi: list[int | float], limit: int) -> list[bool]:
-    """
-        Checks if each BMI value exceeds the given limit
-    """
+    """Checks if each BMI value exceeds the given limit"""
 
     results = []
 
     try:
-        assert type(bmi) is list, "BMI values should be in a list"
-        assert type(limit) is int, "Limit treshhold must be an integer"
+        if not isinstance(bmi, list):
+            raise TypeError("BMI values should be in a list")
+        if not isinstance(limit, int):
+            raise TypeError("Limit treshhold must be an integer")
         for value in bmi:
-            assert type(value) is int or type(
-                value) is float, "BMI values must be numeric"
+            if not isinstance(value, int) and not isinstance(value, float):
+                raise TypeError("BMI values should be numeric")
             results.append(value > limit)
-    except AssertionError as e:
-        print(f"AssertionError: {e}")
+    except TypeError as e:
+        print(f"{type(e).__name__}: {e}")
+        return []
 
     return results
