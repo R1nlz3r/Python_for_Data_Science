@@ -2,21 +2,25 @@ from PIL import Image, UnidentifiedImageError
 import numpy as np
 
 
-def ft_load(path: str, verbose: bool = True) -> np.ndarray:
-    """Loads an image and returns its RGB data"""
+def ft_load(path: str, verbose: bool = True) -> np.ndarray | None:
+    """Loads an image and returns its RGB data."""
 
-    data = []
     try:
+        if not isinstance(path, str):
+            raise TypeError
         with Image.open(path) as img:
             data = np.array(img.convert("RGB"))
+            if verbose:
+                print(f"The shape of image is: {data.shape}")
+                print(data)
+            return data
+    except TypeError:
+        print("TypeError: Path must be a string")
     except FileNotFoundError:
-        raise FileNotFoundError("File not found")
+        print("FileNotFoundError: Incorrect path to image")
     except UnidentifiedImageError:
-        raise Exception("Cannot open or identify the file")
-    except ValueError:
-        raise PermissionError("No permission to read the file")
-
-    if verbose:
-        print(f"The shape of image is: {data.shape}")
-        print(data)
-    return data
+        print("UnidentifiedImageError: Invalid or corrupted file")
+    except PermissionError:
+        print("PermissionError: No permission to read the file")
+    except Exception as e:
+        print(f"{type(e).__name__}: {e}")
