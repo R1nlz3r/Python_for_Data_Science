@@ -18,10 +18,13 @@ def main() -> None:
     image = np.expand_dims(image, axis=-1)
     print(f"The shape of image is: {image.shape} or {image.shape[:2]}")
     print(image)
-    image = image[:, :, 0].T
-    print(f"New shape after transpose: {image.shape}")
-    print(image)
-    plt.imshow(image, cmap="gray")
+    rotated = np.empty((image.shape[0], image.shape[1]), dtype=np.uint8)
+    for y in range(rotated.shape[1]):
+        for x in range(rotated.shape[0]):
+            rotated[x, y] = image[y, x, 0]
+    print(f"New shape after transpose: {rotated.shape}")
+    print(rotated)
+    plt.imshow(rotated, cmap="gray")
     plt.show()
 
 
